@@ -37,7 +37,7 @@ const NewActivity = () => {
     };
 
     return (
-        <div>
+        <div> 
             <form onSubmit={addNewActivity}>
                 <h2>Add a new activity</h2>
                 <br />
