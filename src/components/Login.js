@@ -21,7 +21,7 @@ const Login = () => {
                 })
                 const data = await response.json();
                 console.log("This is the data: ", data);
-                // localStorage.setItem("token", token)
+                localStorage.setItem("token", data.token)
                 navigate("/profile");
 
         } catch (error) {
