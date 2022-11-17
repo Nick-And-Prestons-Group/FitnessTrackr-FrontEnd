@@ -12,8 +12,17 @@ const Routines = () => {
                     <h2>{eachRoutine.name}</h2>
                     <h4>Goal: {eachRoutine.goal}</h4>
                     <p><b>Created by: </b>{eachRoutine.creatorName}</p>
-                </div>
-        }) : 
+                    {eachRoutine[activities].map((indivActivity, idx) => {
+                        return <div key={idx}>
+                            <h5>{indivActivity.name}</h5>
+                            <p>{indivActivity.description}</p>
+                            <p>{indivActivity.duration} minutes</p>
+                            <p>{indivActivity.count} reps</p>
+
+                        </div>
+                    })}
+                    </div>
+            }) : 
             <div>
                 <p>Please log in or register for an account</p>
                 <Link to="/login">Click Here</Link>
