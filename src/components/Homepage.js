@@ -7,6 +7,7 @@ const Homepage = () => {
     const [routines, setRoutines] = useState([]);
     const [username, setUsername] = useState("");
     const [id, setId] = useState("");
+    const currentToken = localStorage.getItem("token");
 
     useEffect(() => {
         async function fetchActivities() {
@@ -68,7 +69,7 @@ const Homepage = () => {
 
         loadProfileInfo();
 
-    }, []);
+    }, [currentToken]);
 
     return (
         <div>

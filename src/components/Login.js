@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [newError, setNewError] = useState(null);
+    const [succesMessage, setSuccessMessage] = useState("")
     const navigate = useNavigate();
 
     async function logInUser(event) {
@@ -20,9 +22,9 @@ const Login = () => {
                     })
                 })
                 const data = await response.json();
-                console.log("This is the data: ", data);
-                localStorage.setItem("token", data.token)
-                navigate("/profile");
+                localStorage.setItem("token", data.token);
+                setNewError(data.error);
+                setSuccessMessage(data.message);
 
         } catch (error) {
             console.error
@@ -37,7 +39,6 @@ const Login = () => {
         setPassword(event.target.value)
     };
 
-    // must have a function verifying everything is correct and/ if username and password dont match
     return (
         <div>
             <form onSubmit={logInUser}>Log In
@@ -48,6 +49,14 @@ const Login = () => {
                 <br />
                 <button type="submit">Submit</button>
                 <br />
+                {newError && newError.length ? 
+                <div>
+                    <p>{newError}</p>
+                </div> : 
+                <div>
+                    <p>{succesMessage}</p>
+                    <Link to="/profile">Go to profile</Link>
+                </div>}
                 <p>Don't have an account?<Link to={"/register"}>Register Here</Link></p>
             </form>
         </div>
