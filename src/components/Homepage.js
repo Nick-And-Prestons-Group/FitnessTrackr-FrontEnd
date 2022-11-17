@@ -1,9 +1,50 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import Navbar from "./Navbar";
 import { Outlet } from "react-router-dom";
 
 const Homepage = () => {
-    // initial api calls here, data passed to outlet context
+    const [activities, setActivities] = useState([]);
+    const [routines, setRoutines] = useState([]);
+
+    useEffect(() => {
+        async function fetchActivities() {
+            try {
+                const response = await fetch ("http://fitnesstrac-kr.herokuapp.com/api/activities", {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                })
+                const data = await response.json();
+
+                setActivities(data)
+            } catch (error) {
+                console.error
+            }
+        }
+
+        fetchActivities();
+
+    }, []);
+
+    useEffect(() => {
+        async function fetchRoutines() {
+            try {
+                const response = await fetch ("http://fitnesstrac-kr.herokuapp.com/api/routines", {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                })
+                const data = await response.json();
+
+                setRoutines(data)
+            } catch (error) {
+                console.error
+            }
+        }
+
+        fetchRoutines();
+
+    }, []);
 
     return (
         <div>
@@ -11,7 +52,7 @@ const Homepage = () => {
                 <h1>Fitness Trackr</h1>
                 <Navbar />
             </div>
-            {/* <Outlet context={} /> */}
+            <Outlet context={[activities, routines]}/>
         </div>
     )
 };
