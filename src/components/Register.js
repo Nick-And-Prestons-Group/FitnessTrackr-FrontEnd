@@ -43,7 +43,7 @@ const Register = () => {
                 <br />
                 <input type="text" value={username} onChange={updateUsernameState} placeholder="Create Username" required />
                 <br />
-                <input type="text" value={password} onChange={updatePasswordState} placeholder="Create Password" required />
+                <input type="password" value={password} onChange={updatePasswordState} placeholder="Create Password" required />
                 <br />
                 <button type="submit">Submit</button>
                 <br />

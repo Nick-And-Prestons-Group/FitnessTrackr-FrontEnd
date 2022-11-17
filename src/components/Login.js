@@ -37,13 +37,14 @@ const Login = () => {
         setPassword(event.target.value)
     };
 
+    // must have a function verifying everything is correct and/ if username and password dont match
     return (
         <div>
             <form onSubmit={logInUser}>Log In
                 <br />
                 <input type="text" value={username} onChange={updateUsernameState} placeholder="Your Username" required />
                 <br />
-                <input type="text" value={password} onChange={updatePasswordState} placeholder="Your Password" required />
+                <input type="password" value={password} onChange={updatePasswordState} placeholder="Your Password" required />
                 <br />
                 <button type="submit">Submit</button>
                 <br />

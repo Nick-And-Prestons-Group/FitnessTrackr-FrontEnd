@@ -1,11 +1,11 @@
 import React from "react";
-import { Link, useOutletContext, useParams, useNavigate, Navigate } from "react-router-dom";
+import { Link, useOutletContext, useNavigate } from "react-router-dom";
 import RoutineDetails from "./RoutineDetails";
 
 const Profile = () => {
     const currentToken = localStorage.getItem("token");
     const navigate = useNavigate();
-    const [] = useOutletContext;
+    const [,, username] = useOutletContext();
 
     function logOutUser(event) {
         event.preventDefault();
@@ -18,8 +18,7 @@ const Profile = () => {
             {currentToken && currentToken.length ?
             <div>
                 <form onSubmit={logOutUser}>
-                    <h2>Username: </h2>
-                    <h2>Name: </h2>
+                    <h2>Username: {username}</h2>
                     <button type="submit">Log Out</button>
                 </form>
                 <br />
