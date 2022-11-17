@@ -8,7 +8,7 @@ const Activities = () => {
 
     return (
         <div> { currentToken && currentToken.length ? 
-            <NewActivity /> 
+            <NewActivity />
             : null }
             { activities.map((eachActivity, idx) => {
                 return <div key={idx}>
