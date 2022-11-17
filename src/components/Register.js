@@ -24,7 +24,7 @@ const Register = () => {
             const data = await response.json();
             localStorage.setItem("token", data.token);
             setNewError(data.error);
-            setSuccessMessage(data.message)
+            setSuccessMessage(data.message);
             
 
         } catch (error) {
