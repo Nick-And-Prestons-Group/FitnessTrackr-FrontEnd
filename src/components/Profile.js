@@ -1,6 +1,5 @@
 import React from "react";
 import { Link, useOutletContext, useNavigate } from "react-router-dom";
-import RoutineDetails from "./RoutineDetails";
 
 const Profile = () => {
     const currentToken = localStorage.getItem("token");
@@ -22,7 +21,6 @@ const Profile = () => {
                     <button type="submit">Log Out</button>
                 </form>
                 <br />
-                <RoutineDetails />
             </div> : 
             <div>
                 <p>Please log in or register for an account</p>
