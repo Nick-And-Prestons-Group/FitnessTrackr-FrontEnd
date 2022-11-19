@@ -3,10 +3,10 @@ import { useNavigate } from "react-router-dom";
 
 const NewActivity = () => {
     const [name, setName] = useState("");
+    const [description, setDescription] = useState("");
     const [newActName, setNewActName] = useState("");
     const [newActDescription, setNewActDescripton] = useState("");
     const [newError, setNewError] = useState(null);
-    const [description, setDescription] = useState("");
     const currentToken = localStorage.getItem("token");
     const navigate = useNavigate();
 

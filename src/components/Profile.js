@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useOutletContext, useNavigate } from "react-router-dom";
+import MyRoutines from "./MyRoutines";
 
 const Profile = () => {
     const currentToken = localStorage.getItem("token");
@@ -21,9 +22,8 @@ const Profile = () => {
                     <h2>Username: {username}</h2>
                     <button type="submit">Log Out</button>
                 </form>
-                {/* some component for "My routines here" and ability to delete them/edit them
-                then a create new routine component */}
                 <br />
+                <MyRoutines />
             </div> : 
             <div>
                 <p>Please log in or register for an account</p>

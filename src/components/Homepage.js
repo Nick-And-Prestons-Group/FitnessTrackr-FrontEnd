@@ -69,7 +69,7 @@ const Homepage = () => {
 
                 const data = await response.json();
                 setUsername(data.username);
-                setId(data.Id);
+                setId(data.id);
             } catch (error) {
                 console.error
             }

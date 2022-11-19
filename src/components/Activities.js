@@ -10,6 +10,7 @@ const Activities = () => {
     const currentToken = localStorage.getItem("token") || false;
     const [searchInput, setSearchInput] = useState("");
 
+    // add drop down for each activity to add to one of your routines
 
     async function SearchActivities(searchInput) {
     // add useffect v experiment with settimeout for autocomplete
