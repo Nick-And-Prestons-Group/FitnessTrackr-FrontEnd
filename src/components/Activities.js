@@ -10,6 +10,7 @@ const Activities = () => {
     const currentToken = localStorage.getItem("token") || false;
     const [searchInput, setSearchInput] = useState("");
 
+
     async function SearchActivities(searchInput) {
     // add useffect v experiment with settimeout for autocomplete
         try {
@@ -28,11 +29,14 @@ const Activities = () => {
             console.error
         }
     }
+// useEffect(()=>{
+//     SearchActivities(searchInput)
+// },[])
 
     function updateSearchInput(event) {
         setSearchInput(event.target.value)
         // v better to put it to submit button
-        SearchActivities(searchInput)
+        // SearchActivities(searchInput)
     }
     // useEffect -> searchInput -> run  searchActivities(searchInput)
 
@@ -41,9 +45,13 @@ const Activities = () => {
         <div> { currentToken && currentToken.length ? 
             <NewActivity />
             : null }
-            <label for="searchbar">Search:</label>
-            <input type="text" id="searchbar" value={searchInput} onChange={updateSearchInput}></input>
-            {/* add submit button -and- clear button to get original list back */}
+            <form onSubmit={SearchActivities}>
+                <label for="searchbar">Search:</label>
+                <input type="text" id="searchbar" value={searchInput} onChange={updateSearchInput}></input>
+                {/* add submit button -and- clear button to get original list back */}
+                <button type="clear" onClick= {setSearchInput("")}>Clear</button>
+                <button type="submit">Submit</button>
+            </form>
             {/* two ! forces boolean */}
             {!!searchData.length ? 
                     searchData.map((eachSearch, idx) => {
