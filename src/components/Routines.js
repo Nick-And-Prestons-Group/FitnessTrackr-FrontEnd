@@ -45,7 +45,7 @@ const Routines = () => {
                 :
                 <div>
                 
-                    <form onSubmit={SearchActivities}>
+                    <form onSubmit={SearchRoutines}>
                         <label for="searchbar">Search:</label>
                         <input type="text" id="searchbar" value={searchInput} onChange={updateSearchInput}></input>
                         {/* add submit button -and- clear button to get original list back */}
@@ -55,7 +55,10 @@ const Routines = () => {
                     {!!searchData.length ?
                     searchData.map((eachSearch, idx) =>{
                     return <div key = {idx}>
-                        
+                        <h2>{eachSearch.name}</h2>
+                        <h4>Goal: {eachSearch.goal}</h4>
+                        <p><b>Created by: </b>{eachSearch.creatorName}</p>
+                        <Link to={`/routines/${eachSearch.id}`}>See more</Link>
                     </div>
                     })
                     :

@@ -5,13 +5,35 @@ import NewActivity from "./NewActivity";
 
 
 const Activities = () => {
-    const {activitiesState} = useOutletContext();
+    const {activitiesState, idState} = useOutletContext();
     const [activities, setActivities] = activitiesState;
+    const [id, setId] = idState
     const currentToken = localStorage.getItem("token") || false;
     const [searchInput, setSearchInput] = useState("");
+    const [selectionId, setSelectionId] = useState(0);
 
 
-    async function SearchActivities(searchInput) {
+useEffect(()=>{
+    async function UserRoutines(event) {
+        event.preventDefault();
+        try {
+            const routinesResponse = await fetch("http://placeholder.com/api/users/me",{
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    userID: `${id}`
+                })
+            })
+            const myRoutines= await routinesResponse.json()
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    UserRoutines();
+},[])
+
+async function SearchActivities(searchInput) {
     // add useffect v experiment with settimeout for autocomplete
         try {
             const response = await fetch("http://placeholder.com/api/activities/search", {
@@ -29,17 +51,15 @@ const Activities = () => {
             console.error
         }
     }
-// useEffect(()=>{
-//     SearchActivities(searchInput)
-// },[])
+
+
 
     function updateSearchInput(event) {
-        setSearchInput(event.target.value)
-        // v better to put it to submit button
-        // SearchActivities(searchInput)
+        setSearchInput(event.target.value)}
+    
+    function updateSelectionId(event) {
+        setSelectionId(event.target.value)
     }
-    // useEffect -> searchInput -> run  searchActivities(searchInput)
-
 
     return (
         <div> { currentToken && currentToken.length ? 
@@ -66,6 +86,17 @@ const Activities = () => {
                         return <div key={idx}>
                             <h2>{eachActivity.name}</h2>
                             <p><b>Description: </b>{eachActivity.description}</p>
+                                    {!!id.length ?
+                                    <form onSubmit={placeholderpatch()}>
+                                        <label for="routine">Add to routine</label>
+                                        <select name="routine" onChange={updateSelectionId}>
+                                            {myRoutines.map((routineSelect, idx)=>{
+                                                <option value={routineSelect.id} >{routineSelect.name}</option>
+                                            })}
+                                        </select>
+                                        <button type="submit">Add</button>
+                                    </form>
+                                    :null}       
                         </div>
                      }) 
             }
