@@ -9,6 +9,10 @@ const Homepage = () => {
     const [routineActivities, setRoutineActivities] = useState([]);
     const [id, setId] = useState("");
     const currentToken = localStorage.getItem("token");
+    const pageContext = {activitiesState: [activities, setActivities], 
+                        routineState: [routines, setRoutines],
+                        usernameState: [username, setUsername], 
+                        idState: [id, setId]}
 
     useEffect(() => {
         async function fetchActivities() {
@@ -81,7 +85,7 @@ const Homepage = () => {
                 <h1>Fitness Trackr</h1>
                 <Navbar />
             </div>
-            <Outlet context={[activities, routines, username, id]}/>
+            <Outlet context={pageContext}/>
         </div>
     )
 };

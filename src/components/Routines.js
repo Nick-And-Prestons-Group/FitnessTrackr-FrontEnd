@@ -3,7 +3,8 @@ import {Link, useOutletContext, useParams } from "react-router-dom";
 import RoutineDetails from "./RoutineDetails";
 
 const Routines = () => {
-    const [, routines] = useOutletContext();
+    const {routineState} = useOutletContext();
+    const [routines, setRoutines] = routineState
     const currentToken = localStorage.getItem("token");
 
     return (

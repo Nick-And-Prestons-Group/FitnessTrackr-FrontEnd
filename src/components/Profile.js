@@ -4,7 +4,8 @@ import { Link, useOutletContext, useNavigate } from "react-router-dom";
 const Profile = () => {
     const currentToken = localStorage.getItem("token");
     const navigate = useNavigate();
-    const [,, username] = useOutletContext();
+    const {usernameState} = useOutletContext();
+    const [username, setUsername] = usernameState;
 
     function logOutUser(event) {
         event.preventDefault();
@@ -20,6 +21,8 @@ const Profile = () => {
                     <h2>Username: {username}</h2>
                     <button type="submit">Log Out</button>
                 </form>
+                {/* some component for "My routines here" and ability to delete them/edit them
+                then a create new routine component */}
                 <br />
             </div> : 
             <div>
