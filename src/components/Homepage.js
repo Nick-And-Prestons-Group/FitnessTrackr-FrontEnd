@@ -6,8 +6,13 @@ const Homepage = () => {
     const [activities, setActivities] = useState([]);
     const [routines, setRoutines] = useState([]);
     const [username, setUsername] = useState("");
+    const [routineActivities, setRoutineActivities] = useState([]);
     const [id, setId] = useState("");
     const currentToken = localStorage.getItem("token");
+    const pageContext = {activitiesState: [activities, setActivities], 
+                        routineState: [routines, setRoutines],
+                        usernameState: [username, setUsername], 
+                        idState: [id, setId]}
 
     useEffect(() => {
         async function fetchActivities() {
@@ -40,6 +45,9 @@ const Homepage = () => {
                 const data = await response.json();
 
                 setRoutines(data)
+                setRoutineActivities(data.activities)
+
+                console.log(routineActivities)
             } catch (error) {
                 console.error
             }
@@ -77,7 +85,7 @@ const Homepage = () => {
                 <h1>Fitness Trackr</h1>
                 <Navbar />
             </div>
-            <Outlet context={[activities, routines, username, id]}/>
+            <Outlet context={pageContext}/>
         </div>
     )
 };

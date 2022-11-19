@@ -5,7 +5,8 @@ import NewActivity from "./NewActivity";
 
 
 const Activities = () => {
-    const [activities] = useOutletContext();
+    const {activitiesState} = useOutletContext();
+    const [activities, setActivities] = activitiesState;
     const currentToken = localStorage.getItem("token");
     const [searchInput, setSearchInput] = useState("");
 
