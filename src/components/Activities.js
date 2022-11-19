@@ -7,11 +7,11 @@ import NewActivity from "./NewActivity";
 const Activities = () => {
     const {activitiesState} = useOutletContext();
     const [activities, setActivities] = activitiesState;
-    const currentToken = localStorage.getItem("token");
+    const currentToken = localStorage.getItem("token") || false;
     const [searchInput, setSearchInput] = useState("");
 
-    async function SearchActivities(event) {
-        event.preventDefault();
+    async function SearchActivities(searchInput) {
+    // add useffect v experiment with settimeout for autocomplete
         try {
             const response = await fetch("http://placeholder.com/api/activities/search", {
              
@@ -19,7 +19,7 @@ const Activities = () => {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    searchinput: searchInput
+                    searchInput: `${searchInput}`
                 })
             })
             const searchData = await response.json()
@@ -31,7 +31,11 @@ const Activities = () => {
 
     function updateSearchInput(event) {
         setSearchInput(event.target.value)
+        // v better to put it to submit button
+        SearchActivities(searchInput)
     }
+    // useEffect -> searchInput -> run  searchActivities(searchInput)
+
 
     return (
         <div> { currentToken && currentToken.length ? 
@@ -39,11 +43,12 @@ const Activities = () => {
             : null }
             <label for="searchbar">Search:</label>
             <input type="text" id="searchbar" value={searchInput} onChange={updateSearchInput}></input>
-
-            { searchInput && searchInput.length ? 
+            {/* add submit button -and- clear button to get original list back */}
+            {/* two ! forces boolean */}
+            {!!searchData.length ? 
                     searchData.map((eachSearch, idx) => {
                         return <div key={idx}>
-                            <h2> ${eachSearch.name} </h2>
+                            <h2> {eachSearch.name} </h2>
                             <p><b>Description:</b>{eachSearch.description}</p>
                         </div>
                     }) 
