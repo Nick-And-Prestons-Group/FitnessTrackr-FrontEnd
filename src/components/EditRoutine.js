@@ -75,6 +75,7 @@ const EditRoutine = () => {
         <div>
             {id && id === creatorId ? 
                 <div>
+                    <div id="edit-routine-div">
                     <form onSubmit={editRoutine}>
                         <p><b>Name: </b>{name}</p>
                         <input placeholder="Edit name" value={editRoutName} onChange={updateNameState} type="text"/>
@@ -85,11 +86,14 @@ const EditRoutine = () => {
                         <button type="submit">Submit</button>
                     </form>
                     <br/>
+                    </div>
+                    <div id="delete-btn-container">
                     <form onSubmit={deleteRoutine}>
-                        <button type="submit">Delete this routine</button>
+                        <button id="delete-btn" type="submit">Delete this routine</button>
                     </form>
+                    </div>
                     {activities.map((activity, idx) => {
-                        return <div key={idx}>
+                        return <div key={idx} id="user-info-display">
                             <b>{activity.name}</b>
                             <p>Description: {activity.description}</p>
                             <p>Do {activity.count} reps for {activity.duration} minutes</p>

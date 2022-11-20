@@ -41,14 +41,14 @@ const Register = () => {
     };
 
     return (
-        <div>
+        <div id="register-container">
             <form onSubmit={registerUser}>Register Account
                 <br />
                 <input type="text" value={username} onChange={updateUsernameState} placeholder="Create Username" required />
                 <br />
                 <input type="password" value={password} onChange={updatePasswordState} placeholder="Create Password" required />
                 <br />
-                <button type="submit">Submit</button>
+                <button id="register-btn" type="submit">Submit</button>
                 <br />
                 {newError && newError.length ? 
                     <div>

@@ -15,13 +15,13 @@ const RoutineDetails = () => {
     return (
         <div>
             {currentToken && currentToken.length ? 
-                <div>
+                <div id="routine-details-container">
                     <h2>{name}</h2>
                     <h4>Goal: {goal}</h4>
                     <p><b>Created by: </b>{creatorName}</p>
                     <b>Activities: </b>
                     {activities.map((activity, idx) => {
-                        return <div key={idx}>
+                        return <div key={idx} id="listof-routs-div">
                             <b>{activity.name}</b>
                             <p>Description: {activity.description}</p>
                             <p>Do {activity.count} reps for {activity.duration} minutes</p>
