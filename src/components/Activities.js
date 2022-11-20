@@ -104,7 +104,7 @@ async function SearchActivities(searchInput) {
         <div> { currentToken && currentToken.length ? 
             <NewActivity />
             : null }
-            <div id="search-container">
+            <div id="search-container-act">
             <form onSubmit={SearchActivities}>
                 <label htmlFor="searchbar">Search:</label>
                 <input type="text" id="searchbar" value={searchInput} onChange={updateSearchInput}></input>
@@ -123,15 +123,15 @@ async function SearchActivities(searchInput) {
                                         <label htmlFor="activityId">Do you want to use this activity?</label>
                                         <input type="checkbox" name="activityId" value={eachActivity.id} onChange={updateSelectionId}></input>
                                         <label htmlFor="routine">Add to Routine:</label>
-                                        <select name="routine" value={selectedRoutineId} onChange={updateSelectedRoutineId}>
+                                        <select id="act-select" name="routine" value={selectedRoutineId} onChange={updateSelectedRoutineId}>
                                             {/* {myRout.map((routineSelect, idx)=>{
                                                 <option value={routineSelect.id} >{routineSelect.name}</option>
                                             })} */}
                                         </select>
                                         <label htmlFor="durationInput">How many minutes do you want to do this activity?</label>
-                                        <input type="number" name="durationInput" value={durationInput} onChange={updateDuration}></input>
+                                        <input id="act-input" type="number" name="durationInput" value={durationInput} onChange={updateDuration}></input>
                                         <label htmlFor="countInput">How many times?</label>
-                                        <input type="number" name="countInput" value={countInput} onChange={updateCount}></input>
+                                        <input id="act-input" type="number" name="countInput" value={countInput} onChange={updateCount}></input>
                                         <button type="submit">Add this activity!</button>
                                     </form>
                             :null}     
@@ -147,15 +147,15 @@ async function SearchActivities(searchInput) {
                                         <label htmlFor="activityId">Do you want to use this activity?</label>
                                         <input type="checkbox" name="activityId" value={eachSearch.id} onChange={updateSelectionId}></input>
                                         <label htmlFor="routine">Add to Routine:</label>
-                                        <select name="routine" value={selectedRoutineId} onChange={updateSelectedRoutineId}>
+                                        <select id="act-select" name="routine" value={selectedRoutineId} onChange={updateSelectedRoutineId}>
                                             {myRoutines.map((routineSelect, idx)=>{
                                                 <option value={routineSelect.id} >{routineSelect.name}</option>
                                             })}
                                         </select>
                                         <label htmlFor="durationInput">How many minutes do you want to do this activity?</label>
-                                        <input type="number" name="durationInput" value={durationInput} onChange={updateDuration}></input>
+                                        <input id="act-input" type="number" name="durationInput" value={durationInput} onChange={updateDuration}></input>
                                         <label htmlFor="countInput">How many times?</label>
-                                        <input type="number" name="countInput" value={countInput} onChange={updateCount}></input>
+                                        <input id="act-input" type="number" name="countInput" value={countInput} onChange={updateCount}></input>
                                         <button type="submit">Add this activity!</button>
                                     </form>
                             :null}  
