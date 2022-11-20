@@ -14,12 +14,13 @@ const Activities = () => {
     const [selectedRoutineId, setSelectedRoutineId] = useState(0)
     const [countInput, setCountInput] = useState(0)
     const [durationInput, setDurationInput] = useState(0)
-
+    const [myRout, setMyRout] = useState({})
 useEffect(()=>{
     async function UserRoutines() {
 
         try {
             const routinesResponse = await fetch("http://heroku-app.com/api/users/me",{
+                // method:"POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -28,6 +29,8 @@ useEffect(()=>{
                 })
             })
             const myRoutines= await routinesResponse.json()
+            console.log("this is the data: ", myRoutines)
+            setMyRout(myRoutines)
         } catch (error) {
             console.log(error)
         }
@@ -114,15 +117,15 @@ async function SearchActivities(searchInput) {
                         return <div key={idx}>
                             <h2>{eachActivity.name}</h2>
                             <p><b>Description: </b>{eachActivity.description}</p>
-                            {!currentToken && currentToken.length ?
+                            {currentToken && currentToken.length ?
                                     <form onSubmit={addActivity}>
                                         <label htmlFor="activityId">Do you want to use this activity?</label>
-                                        <input type="checkbox" name="activityId" value={eachSearch.id} onChange={updateSelectionId}></input>
+                                        <input type="checkbox" name="activityId" value={eachActivity.id} onChange={updateSelectionId}></input>
                                         <label htmlFor="routine">Add to Routine:</label>
                                         <select name="routine" value={selectedRoutineId} onChange={updateSelectedRoutineId}>
-                                            {myRoutines.map((routineSelect, idx)=>{
+                                            {/* {myRout.map((routineSelect, idx)=>{
                                                 <option value={routineSelect.id} >{routineSelect.name}</option>
-                                            })}
+                                            })} */}
                                         </select>
                                         <label htmlFor="durationInput">How many minutes do you want to do this activity?</label>
                                         <input type="number" name="durationInput" value={durationInput} onChange={updateDuration}></input>
