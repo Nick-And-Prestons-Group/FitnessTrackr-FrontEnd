@@ -15,12 +15,11 @@ const Activities = () => {
     const [countInput, setCountInput] = useState(0)
     const [durationInput, setDurationInput] = useState(0)
 
-
 useEffect(()=>{
-    async function UserRoutines(event) {
-        event.preventDefault();
+    async function UserRoutines() {
+
         try {
-            const routinesResponse = await fetch("http://placeholder.com/api/users/me",{
+            const routinesResponse = await fetch("http://heroku-app.com/api/users/me",{
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -48,7 +47,7 @@ async function SearchActivities(searchInput) {
                     searchInput: `${searchInput}`
                 })
             })
-            const searchData = await response.json()
+            const searchData =await response.json()
             console.log("these are the search results: ", searchData)
         } catch (error) {
             console.error
@@ -70,6 +69,9 @@ async function SearchActivities(searchInput) {
 
     function updateDuration(event) {
         setDurationInput(event.target.value)
+    }
+    function resetSearch() {
+        setSearchInput("")
     }
 
     async function addActivity(selectedRoutineId, selectionId, countInput, durationInput) {
@@ -100,62 +102,61 @@ async function SearchActivities(searchInput) {
             <NewActivity />
             : null }
             <form onSubmit={SearchActivities}>
-                <label for="searchbar">Search:</label>
+                <label htmlFor="searchbar">Search:</label>
                 <input type="text" id="searchbar" value={searchInput} onChange={updateSearchInput}></input>
                 {/* add submit button -and- clear button to get original list back */}
-                <button type="clear" onClick= {setSearchInput("")}>Clear</button>
+                <button type="clear" onClick={resetSearch}>Clear</button>
                 <button type="submit">Submit</button>
             </form>
             {/* two ! forces boolean */}
-            {!!searchData.length ? 
-                    searchData.map((eachSearch, idx) => {
-                        return <div key={idx}>
-                            <h2> {eachSearch.name} </h2>
-                            <p><b>Description:</b>{eachSearch.description}</p>
-                            {!!id.length ?
-                                    <form onSubmit={addActivity}>
-                                        <label for="activityId">Do you want to use this activity?</label>
-                                        <input type="checkbox" name="activityId" value={eachSearch.id} onChange={updateSelectionId}></input>
-                                        <label for="routine">Add to Routine:</label>
-                                        <select name="routine" value={selectedRoutineId} onChange={updateSelectedRoutineId}>
-                                            {myRoutines.map((routineSelect, idx)=>{
-                                                <option value={routineSelect.id} >{routineSelect.name}</option>
-                                            })}
-                                        </select>
-                                        <label for="durationInput">How many minutes do you want to do this activity?</label>
-                                        <input type="number" name="durationInput" value={durationInput} onChange={updateDuration}></input>
-                                        <label for="countInput">How many times?</label>
-                                        <input type="number" name="countInput" value={countInput} onChange={updateCount}></input>
-                                        <button type="submit">Add this activity!</button>
-                                    </form>
-                            :null}  
-                        </div>
-                    }) 
-  
-            :
+            {typeof searchData === "undefined" ? 
                     activities.map((eachActivity, idx) => {
                         return <div key={idx}>
                             <h2>{eachActivity.name}</h2>
                             <p><b>Description: </b>{eachActivity.description}</p>
-                            {!!id.length ?
+                            {!currentToken && currentToken.length ?
                                     <form onSubmit={addActivity}>
-                                        <label for="activityId">Do you want to use this activity?</label>
+                                        <label htmlFor="activityId">Do you want to use this activity?</label>
                                         <input type="checkbox" name="activityId" value={eachSearch.id} onChange={updateSelectionId}></input>
-                                        <label for="routine">Add to Routine:</label>
+                                        <label htmlFor="routine">Add to Routine:</label>
                                         <select name="routine" value={selectedRoutineId} onChange={updateSelectedRoutineId}>
                                             {myRoutines.map((routineSelect, idx)=>{
                                                 <option value={routineSelect.id} >{routineSelect.name}</option>
                                             })}
                                         </select>
-                                        <label for="durationInput">How many minutes do you want to do this activity?</label>
+                                        <label htmlFor="durationInput">How many minutes do you want to do this activity?</label>
                                         <input type="number" name="durationInput" value={durationInput} onChange={updateDuration}></input>
-                                        <label for="countInput">How many times?</label>
+                                        <label htmlFor="countInput">How many times?</label>
                                         <input type="number" name="countInput" value={countInput} onChange={updateCount}></input>
                                         <button type="submit">Add this activity!</button>
                                     </form>
                             :null}     
                         </div>
                      }) 
+                     :
+                     searchData.map((eachSearch, idx) => {
+                        return <div key={idx}>
+                            <h2> {eachSearch.name} </h2>
+                            <p><b>Description:</b>{eachSearch.description}</p>
+                            {!currentToken && currentToken.length ?
+                                    <form onSubmit={addActivity}>
+                                        <label htmlFor="activityId">Do you want to use this activity?</label>
+                                        <input type="checkbox" name="activityId" value={eachSearch.id} onChange={updateSelectionId}></input>
+                                        <label htmlFor="routine">Add to Routine:</label>
+                                        <select name="routine" value={selectedRoutineId} onChange={updateSelectedRoutineId}>
+                                            {myRoutines.map((routineSelect, idx)=>{
+                                                <option value={routineSelect.id} >{routineSelect.name}</option>
+                                            })}
+                                        </select>
+                                        <label htmlFor="durationInput">How many minutes do you want to do this activity?</label>
+                                        <input type="number" name="durationInput" value={durationInput} onChange={updateDuration}></input>
+                                        <label htmlFor="countInput">How many times?</label>
+                                        <input type="number" name="countInput" value={countInput} onChange={updateCount}></input>
+                                        <button type="submit">Add this activity!</button>
+                                    </form>
+                            :null}  
+                        </div>
+                    }) 
             }
             
         </div>
