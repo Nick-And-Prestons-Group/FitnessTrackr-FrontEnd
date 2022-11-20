@@ -7,7 +7,7 @@ const Routines = () => {
     const [routines, setRoutines] = routineState
     const currentToken = localStorage.getItem("token");
     const [searchInput, setSearchInput] = useState("");
-
+    
 
     async function SearchRoutines(searchInput) {
     // add useffect v experiment with settimeout for autocomplete
@@ -34,6 +34,9 @@ const Routines = () => {
     function updateSearchInput(event) {
         setSearchInput(event.target.value)
     }
+    function resetSearch() {
+        setSearchInput("")
+    }
 
     return (
         <div> 
@@ -46,13 +49,23 @@ const Routines = () => {
                 <div>
                 
                     <form onSubmit={SearchRoutines}>
-                        <label for="searchbar">Search:</label>
+                        <label htmlFor="searchbar">Search:</label>
                         <input type="text" id="searchbar" value={searchInput} onChange={updateSearchInput}></input>
                         {/* add submit button -and- clear button to get original list back */}
-                        <button type="clear" onClick= {setSearchInput("")}>Clear</button>
+                        <button type="clear" onClick={resetSearch}>Clear</button>
                         <button type="submit">Submit</button>
                     </form>
-                    {!!searchData.length ?
+                    {
+                    typeof searchData === "undefined" ?
+                    routines.map((eachRoutine, idx) => {
+                        return <div key={idx}>
+                            <h2>{eachRoutine.name}</h2>
+                            <h4>Goal: {eachRoutine.goal}</h4>
+                            <p><b>Created by: </b>{eachRoutine.creatorName}</p>
+                            <Link to={`/routines/${eachRoutine.id}`}>See more</Link>
+                            </div>
+                        }) 
+                        :
                     searchData.map((eachSearch, idx) =>{
                     return <div key = {idx}>
                         <h2>{eachSearch.name}</h2>
@@ -61,15 +74,8 @@ const Routines = () => {
                         <Link to={`/routines/${eachSearch.id}`}>See more</Link>
                     </div>
                     })
-                    :
-                    routines.map((eachRoutine, idx) => {
-                    return <div key={idx}>
-                        <h2>{eachRoutine.name}</h2>
-                        <h4>Goal: {eachRoutine.goal}</h4>
-                        <p><b>Created by: </b>{eachRoutine.creatorName}</p>
-                        <Link to={`/routines/${eachRoutine.id}`}>See more</Link>
-                        </div>
-                    }) 
+                    
+
                 }
                 </div>
             }
