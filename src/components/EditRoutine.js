@@ -71,7 +71,6 @@ const EditRoutine = () => {
     };
 
 
-
     return (
         <div>
             {id && id === creatorId ? 
