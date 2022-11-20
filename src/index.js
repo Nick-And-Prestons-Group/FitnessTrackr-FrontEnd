@@ -10,6 +10,7 @@ import Register from "./components/Register";
 import Profile from "./components/Profile";
 import Routines from "./components/Routines";
 import RoutineDetails from "./components/RoutineDetails";
+import EditRoutine from "./components/EditRoutine";
 
 const appElement = document.getElementById("app");
 const root = createRoot(appElement);
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
             {
                 path: "/profile",
                 element: <Profile/>
+            },
+            {
+                path: "/editroutine/:routineId",
+                element: <EditRoutine />
             }
         ]
     }

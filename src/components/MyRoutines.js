@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { useOutletContext, useParams, useNavigate } from "react-router-dom";
+import { Link, useOutletContext, useParams, useNavigate } from "react-router-dom";
 
 const MyRoutines = () => {
-    // different component for edit/delete? different page?
     const {routineState} = useOutletContext();
     const {idState} = useOutletContext();
     const [routines, setRoutines] = routineState;
     const [id, setId] = idState;
+
     const navigate = useNavigate();
     const currentToken = localStorage.getItem("token");
+
     const [newRoutName, setNewRoutName] = useState("");
     const [newRoutGoal, setNewRoutGoal] = useState("");
-    const [routineId, setRoutineId] = useState("");
+    const [addedRoutName, setAddedRoutName] = useState("");
+    const [addedRoutGoal, setAddedRoutGoal] = useState("");
 
     const yourRoutines = routines.filter((routine) => {
         return id == routine.creatorId
     });
-
-    console.log("your routes: ", yourRoutines)
 
     async function addNewRoutine(event) {
         event.preventDefault();
@@ -36,6 +36,10 @@ const MyRoutines = () => {
                 })
             })
             const data = await response.json();
+            setAddedRoutName(data.name);
+            setAddedRoutGoal(data.goal);
+            setNewRoutName("");
+            setNewRoutGoal("");
         } catch (error) {
             console.error
         }
@@ -49,33 +53,6 @@ const MyRoutines = () => {
         setNewRoutGoal(event.target.value)
     };
 
-    async function editRoutine(event) {
-        
-    }
-
-    async function deleteRoutine(event, routineId) {
-        event.preventDefault();
-
-        try {
-            const response = await fetch(`http://fitnesstrac-kr.herokuapp.com/api/routines/${routineId}`, {
-                method: "DELETE",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${currentToken}`
-                    }
-            })
-            const data = await response.json();
-            console.log("delete data: ", data)
-            navigate("/routines");
-        } catch (error) {
-            console.error
-        }
-    };
-
-    function updateRoutineIdState(event) {
-        setRoutineId(event.target.value)
-    }
-
 
     return (
         <div>
@@ -88,15 +65,19 @@ const MyRoutines = () => {
                 <button type="submit">Submit</button>
                 <br />
             </form>
+
+            {addedRoutName && addedRoutName.length ? 
+                    <div>Your new routine!
+                        <p>{addedRoutName}</p>
+                        <p>{addedRoutGoal}</p>
+                    </div>
+                : null}
+                
             <h1>Your Routines</h1>
-            {/* ??? */}
-            {yourRoutines.map((eachRoutine, idx) => {
-                <div key={idx}>
-                    <form onSubmit={(e) => deleteRoutine(e, eachRoutine.id)}>
-                        <p>{eachRoutine.name}</p> 
-                        <p>{eachRoutine.goal}</p>
-                        <button value={routineId} type="submit">Delete this routine</button>
-                    </form>
+            {yourRoutines.map((eachRoutine, idx) => { 
+                return <div key={idx}>
+                    <h4>{eachRoutine.name}</h4>
+                    <Link to={`/editroutine/${eachRoutine.id}`}>Edit or delete this routine</Link>
                 </div>
             })}
         </div>
