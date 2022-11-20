@@ -104,16 +104,18 @@ async function SearchActivities(searchInput) {
         <div> { currentToken && currentToken.length ? 
             <NewActivity />
             : null }
+            <div id="search-container">
             <form onSubmit={SearchActivities}>
                 <label htmlFor="searchbar">Search:</label>
                 <input type="text" id="searchbar" value={searchInput} onChange={updateSearchInput}></input>
                 <button type="clear" onClick={resetSearch}>Clear</button>
                 <button type="submit">Submit</button>
             </form>
+            </div>
             {/* two ! forces boolean */}
             {typeof searchData === "undefined" ? 
                     activities.map((eachActivity, idx) => {
-                        return <div key={idx}>
+                        return <div key={idx} id="listof-activities-div">
                             <h2>{eachActivity.name}</h2>
                             <p><b>Description: </b>{eachActivity.description}</p>
                             {currentToken && currentToken.length ?
@@ -137,7 +139,7 @@ async function SearchActivities(searchInput) {
                      }) 
                      :
                      searchData.map((eachSearch, idx) => {
-                        return <div key={idx}>
+                        return <div key={idx} id="listof-activities-div">
                             <h2> {eachSearch.name} </h2>
                             <p><b>Description:</b>{eachSearch.description}</p>
                             {!currentToken && currentToken.length ?

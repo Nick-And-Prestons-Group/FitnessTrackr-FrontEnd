@@ -40,14 +40,14 @@ const Login = () => {
     };
 
     return (
-        <div>
+        <div id="login-container">
             <form onSubmit={logInUser}>Log In
                 <br />
                 <input type="text" value={username} onChange={updateUsernameState} placeholder="Your Username" required />
                 <br />
                 <input type="password" value={password} onChange={updatePasswordState} placeholder="Your Password" required />
                 <br />
-                <button type="submit">Submit</button>
+                <button id="login-btn" type="submit">Submit</button>
                 <br />
                 {newError && newError.length ? 
                 <div>

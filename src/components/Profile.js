@@ -18,17 +18,20 @@ const Profile = () => {
         <div>
             {currentToken && currentToken.length ?
             <div>
+            <div id="user-info-container">
                 <form onSubmit={logOutUser}>
                     <h2>Username: {username}</h2>
                     <button type="submit">Log Out</button>
                 </form>
+                </div>
                 <br />
                 <MyRoutines />
+                <br />
             </div> : 
             <div>
                 <p>Please log in or register for an account</p>
                 <Link to="/login">Click Here</Link>
-            </div> 
+            </div>
             }
         </div>
     )

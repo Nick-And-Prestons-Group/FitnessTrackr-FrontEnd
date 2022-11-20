@@ -47,7 +47,7 @@ const Routines = () => {
                 </div>
                 :
                 <div>
-                
+                    <div id="search-container">
                     <form onSubmit={SearchRoutines}>
                         <label htmlFor="searchbar">Search:</label>
                         <input type="text" id="searchbar" value={searchInput} onChange={updateSearchInput}></input>
@@ -55,10 +55,11 @@ const Routines = () => {
                         <button type="clear" onClick={resetSearch}>Clear</button>
                         <button type="submit">Submit</button>
                     </form>
+                    </div>
                     {
                     typeof searchData === "undefined" ?
                     routines.map((eachRoutine, idx) => {
-                        return <div key={idx}>
+                        return <div key={idx} id="listof-routs-div">
                             <h2>{eachRoutine.name}</h2>
                             <h4>Goal: {eachRoutine.goal}</h4>
                             <p><b>Created by: </b>{eachRoutine.creatorName}</p>
@@ -67,15 +68,13 @@ const Routines = () => {
                         }) 
                         :
                     searchData.map((eachSearch, idx) =>{
-                    return <div key = {idx}>
+                    return <div key={idx} id="listof-routs-div">
                         <h2>{eachSearch.name}</h2>
                         <h4>Goal: {eachSearch.goal}</h4>
                         <p><b>Created by: </b>{eachSearch.creatorName}</p>
                         <Link to={`/routines/${eachSearch.id}`}>See more</Link>
                     </div>
                     })
-                    
-
                 }
                 </div>
             }

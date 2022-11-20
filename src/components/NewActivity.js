@@ -46,7 +46,7 @@ const NewActivity = () => {
     };
 
     return (
-        <div> 
+        <div id="new-act-container">
             <form onSubmit={addNewActivity}>
                 <h2>Add a new activity</h2>
                 <br />
