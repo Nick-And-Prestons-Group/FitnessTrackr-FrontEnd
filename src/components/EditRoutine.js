@@ -8,21 +8,50 @@ const EditRoutine = () => {
     const [id, setId] = idState;
     const navigate = useNavigate();
     const currentToken = localStorage.getItem("token");
-    const [newRoutName, setNewRoutName] = useState("");
-    const [newRoutGoal, setNewRoutGoal] = useState("");
-    // const [routineId, setRoutineId] = useState("");
+    const [editRoutName, setEditRoutName] = useState("");
+    const [editRoutGoal, setEditRoutGoal] = useState("");
     const { routineId } = useParams();
 
     const thisRoutine = routines.find((routine) => {
-        return id == routine.id
+        return routineId == routine.id
     });
-    const {name, goal, creatorName, activities} = thisRoutine
+    console.log("this rout: ", thisRoutine);
+
+    const {name, goal, creatorId, activities} = thisRoutine
 
     async function editRoutine(event) {
-        
-    }
+        event.preventDefault();
 
-    async function deleteRoutine(event, routineId) {
+        try {
+            const response = await fetch(`http://fitnesstrac-kr.herokuapp.com/api/routines/${routineId}`, {
+                method: "PATCH",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${currentToken}`
+                    },
+                body: JSON.stringify({
+                    name: editRoutName,
+                    goal: editRoutGoal
+                })
+            })
+            const data = await response.json();
+            console.log("edit data: ", data)
+            navigate("/routines");
+        } catch (error) {
+            console.error
+        }
+    };
+
+
+    function updateNameState(event) {
+        setEditRoutName(event.target.value)
+    };
+
+    function updateGoalState(event) {
+        setEditRoutGoal(event.target.value)
+    };
+
+    async function deleteRoutine(event) {
         event.preventDefault();
 
         try {
@@ -41,18 +70,32 @@ const EditRoutine = () => {
         }
     };
 
-    function updateRoutineIdState(event) {
-        setRoutineId(event.target.value)
-    }
 
-    console.log("ctid: ", id)
-    console.log("ROUTINE ID: ", routineId)
 
     return (
         <div>
-            {currentToken && currentToken.length ? 
+            {id && id === creatorId ? 
                 <div>
-                    <p>edit routine</p>
+                    <form onSubmit={editRoutine}>
+                        <p><b>Name: </b>{name}</p>
+                        <input placeholder="Edit name" value={editRoutName} onChange={updateNameState} type="text"/>
+                        <br/>
+                        <p><b>Goal: </b>{goal}</p>
+                        <input placeholder="Edit goal" value={editRoutGoal} onChange={updateGoalState} type="text"/>
+                        <br/>
+                        <button type="submit">Submit</button>
+                    </form>
+                    <br/>
+                    <form onSubmit={deleteRoutine}>
+                        <button type="submit">Delete this routine</button>
+                    </form>
+                    {activities.map((activity, idx) => {
+                        return <div key={idx}>
+                            <b>{activity.name}</b>
+                            <p>Description: {activity.description}</p>
+                            <p>Do {activity.count} reps for {activity.duration} minutes</p>
+                        </div>
+                    })}
                 </div>
             : <div>
                 <p>Please log in or register for an account to view routines</p>
@@ -63,16 +106,3 @@ const EditRoutine = () => {
 };
 
 export default EditRoutine;
-
-            {/* ???
-            {mappedRoutineNames.map(() => {
-                <div key={idx}>
-                     <p>{mappedRoutineNames}</p> 
-                    <form onSubmit={(e) => deleteRoutine(e, eachRoutine.id)}>
-                        <p>{mappedRoutineNames}</p> 
-                        <Link to={`/routines/${eachRoutine.id}`}>Edit or delete this routine</Link>
-                        <p>{eachRoutine.goal}</p>
-                        <button value={routineId} type="submit">Delete this routine</button>
-                    </form>
-                </div>
-            })} */}
