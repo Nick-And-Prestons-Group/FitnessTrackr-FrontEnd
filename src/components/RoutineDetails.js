@@ -9,7 +9,6 @@ const RoutineDetails = () => {
         return id == routine.id
     });
     const {name, goal, creatorName, activities} = thisRoutine
-    console.log(thisRoutine);
     const currentToken = localStorage.getItem("token");
 
 
