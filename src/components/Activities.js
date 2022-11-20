@@ -11,6 +11,9 @@ const Activities = () => {
     const currentToken = localStorage.getItem("token") || false;
     const [searchInput, setSearchInput] = useState("");
     const [selectionId, setSelectionId] = useState(0);
+    const [selectedRoutineId, setSelecetedRoutineId] = useState(0)
+    const [countInput, setCountInput] = useState(0)
+    const [durationInput, setDurationInput] = useState(0)
 
 
 useEffect(()=>{
@@ -52,14 +55,34 @@ async function SearchActivities(searchInput) {
         }
     }
 
+async function addActivity(selectedRoutineId, selectionId, countInput, durationInput) {
+    try {
+        const response = await fetch(`http://fitnesstrac-kr.herokuapp.com/routines/${selectedRoutineId}/activities`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
+                    },
+            body: JSON.stringify({
+                activityId: selectionId,
+                count: countInput,
+                duration: durationInput
+            })
+        
+        })
 
+        const data= await response.JSON();
+        console.log("this is the data: ", data)
+    } catch (error) {
+        console.log(error)
+    }
+}
 
     function updateSearchInput(event) {
         setSearchInput(event.target.value)}
     
     function updateSelectionId(event) {
-        setSelectionId(event.target.value)
-    }
+        setSelectionId(event.target.value)}
 
     return (
         <div> { currentToken && currentToken.length ? 
@@ -94,6 +117,7 @@ async function SearchActivities(searchInput) {
                                                 <option value={routineSelect.id} >{routineSelect.name}</option>
                                             })}
                                         </select>
+                                        <input></input>
                                         <button type="submit">Add</button>
                                     </form>
                                     :null}       
