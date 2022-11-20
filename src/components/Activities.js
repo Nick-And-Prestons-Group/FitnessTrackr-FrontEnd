@@ -20,7 +20,7 @@ useEffect(()=>{
 
         try {
             const routinesResponse = await fetch("http://heroku-app.com/api/users/me",{
-                // method:"POST",
+                method:"POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -42,7 +42,7 @@ async function SearchActivities(searchInput) {
     // add useffect v experiment with settimeout for autocomplete
         try {
             const response = await fetch("http://placeholder.com/api/activities/search", {
-             
+                method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -108,7 +108,6 @@ async function SearchActivities(searchInput) {
             <form onSubmit={SearchActivities}>
                 <label htmlFor="searchbar">Search:</label>
                 <input type="text" id="searchbar" value={searchInput} onChange={updateSearchInput}></input>
-                {/* add submit button -and- clear button to get original list back */}
                 <button type="clear" onClick={resetSearch}>Clear</button>
                 <button type="submit">Submit</button>
             </form>
