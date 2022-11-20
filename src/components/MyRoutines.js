@@ -56,6 +56,7 @@ const MyRoutines = () => {
 
     return (
         <div>
+            <div id="add-routine-div">
             <form onSubmit={addNewRoutine}>
                 <h2>Create a New Routine</h2>
                 <input required placeholder="Name of routine" value={newRoutName} onChange={updateNameState} type="text"/>
@@ -72,10 +73,10 @@ const MyRoutines = () => {
                         <p>{addedRoutGoal}</p>
                     </div>
                 : null}
-                
+            </div> 
             <h1>Your Routines</h1>
             {yourRoutines.map((eachRoutine, idx) => { 
-                return <div key={idx}>
+                return <div key={idx} id="user-info-display">
                     <h4>{eachRoutine.name}</h4>
                     <Link to={`/editroutine/${eachRoutine.id}`}>Edit or delete this routine</Link>
                 </div>
